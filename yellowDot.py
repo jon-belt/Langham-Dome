@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def locateDot(imagePath, red_nums, green_nums, blue_nums):
+def locateDot(imagePath, red, green, blue):
     img = cv2.imread(imagePath)
     if img is not None:
         #split channels for CMY conversion
@@ -21,7 +21,7 @@ def locateDot(imagePath, red_nums, green_nums, blue_nums):
         # cv2.destroyAllWindows()
 
         # create a red colour mask, capturing a range of red shades
-        red_mask = (red_channel > red_nums) & (green_channel < green_nums) & (blue_channel < blue_nums)
+        red_mask = (red_channel > red) & (green_channel < green) & (blue_channel < blue)
 
         # create an output image with only the red regions
         result = np.zeros_like(img)
@@ -30,6 +30,10 @@ def locateDot(imagePath, red_nums, green_nums, blue_nums):
         # cv2.imshow('Red Mask', result)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
+
+        img_name = str("R"+str(red)+"_"+"G"+str(green)+"_"+"B"+str(blue)+".jpg")
+        img_path = ("testing images/"+img_name)
+        cv2.imwrite(img_path, result)
     else:
         print("Error: Unable to load the image.")
 

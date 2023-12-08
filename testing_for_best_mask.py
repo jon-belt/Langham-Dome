@@ -7,9 +7,9 @@ green = 255
 blue = 255
 i = 0
 
-redL = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 255]
-greenL = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 255]
-blueL = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 255]
+redL = [125]
+greenL = [210]
+blueL = [119]
 #it takes 71 seconds to compile all images
 
 reticuleDotPath = ("img/reticuleAndDot.png")
@@ -24,5 +24,8 @@ reticuleDotPath = ("img/reticuleAndDot.png")
 for red_value in redL:
     for green_value in greenL:
         for blue_value in blueL:
-            #print(i*elapsed_time)
+            #counter so i know how close it is to being finished, i = 2743
+            print(i)
             i=i+1
+            locateDot(reticuleDotPath, red_value, green_value, blue_value)
+
