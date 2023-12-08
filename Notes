@@ -1,0 +1,19 @@
+Notes:
+
+- different sets of images from two separate videos produce different colour spaces
+    - this make it impossible to know what the specific colour mask should be without visiting the dome and finding the camera position
+    - for now, i will be using the phone videos as I believe it will be a more accurate representation of what the PI camera sees
+    - the numbers can be edited afterwards, but this introduces a lot of further questions
+
+- i need to find the position of the dot and reticule, however when using a camera to view the screen, the distance from the camera to the screen affects 
+  the perceived distance between the two which in turn changes the score
+    - to mitigate this an algorithm can be produced that performs these tasks (in order):
+        - finds corners of the dome screen
+        - creates a new image variable of just the screen
+        - scales this image up to a set size, so all calculations are the same
+        - then the dot and reticule can be found as initially planned
+
+
+i have two videos i can take images from, one is the raw footage, and another is filmed in person on a phone, the problem with this
+is that the videos filmed on a phone are very different in colour to official RAF footage
+
