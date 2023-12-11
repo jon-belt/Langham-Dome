@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from conversions import cmyConversion
 from stack_images import stackImages
-from masks import dotMask
+from transformations import dotMask
 
 frame_width = 64
 frame_height = 48
