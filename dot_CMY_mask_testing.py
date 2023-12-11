@@ -1,19 +1,16 @@
-###  This code is now redundant as it was just used to find an general idea of the parameters.
-###  It also used an now outdated and replaced version of 'locateDot' from 'yellowDot.py'
-###  I am keeping this file here for now, so I have a documentation of my work, or if it is needed again in the future 
-
 from conversions import cmyConversion
 import numpy as np
 import cv2
-import time
+
 
 i = 0
 cyanL = [20]
 magentaL = [90]
 yellowL = [120]
 
-reticuleDotPath = ("./imgs/reticuleAndDot.png")
-dotPath = ("./imgs/dot.png")
+reticule_path = ("./imgs/reticule.png")
+reticule_dot_path = ("./imgs/reticuleAndDot.png")
+dot_path = ("./imgs/dot.png")
 
 #this code runs through every possible value in the colour lists
 for cyan_value in cyanL:
@@ -22,17 +19,17 @@ for cyan_value in cyanL:
             #counter so i know how close it is to being finished
             print(i)
             i=i+1
-            img = cv2.imread(reticuleDotPath)
+            img = cv2.imread(dot_path)
             if img is not None:
                 conversion = cmyConversion(img)
                 cmy_img = conversion[0]
 
                 #create mask from the current parameters
-                red_mask = (conversion[1] > cyan_value) & (conversion[2] < magenta_value) & (conversion[3] > yellow_value)
+                dot_mask = (conversion[1] > cyan_value) & (conversion[2] < magenta_value) & (conversion[3] > yellow_value)
 
                 #create an output image
                 result = np.zeros_like(cmy_img)
-                result[red_mask] = cmy_img[red_mask]
+                result[dot_mask] = cmy_img[dot_mask]
 
                 #shows image
                 cv2.imshow('Red Mask', result)

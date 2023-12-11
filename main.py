@@ -1,46 +1,24 @@
-from conversions import cmyConversion
-import numpy as np
+from locate_points import locateDot
 import cv2
+import numpy as np
+from conversions import cmyConversion
+from stack_images import stackImages
+from masks import dotMask
 
 #values for these variables were derived from trial and error through the 'testing_for_best_mask.py' script i wrote
 #values are solely based on the phone video
 
-cyan = 20
-magenta = 90
-yellow = 120
+reticule_path = ("./imgs/reticule.png")
+reticule_dot_path = ("./imgs/reticuleAndDot.png")
+dot_path = ("./imgs/dot.png")
+three_dot_path = ("./imgs/3dots.png")
 
-red = 125
-green = 210
-blue = 125
+img = cv2.imread(three_dot_path)
+cmy_img = cmyConversion(img)
+masked_img = dotMask(cmy_img)
 
-#opens file with error checking
-cap = cv2.VideoCapture('videos/1.mp4')
-if not cap.isOpened():
-    print("Error: Couldn't open the video file.")
-    exit()
-
-# Get the video properties
-fps = cap.get(cv2.CAP_PROP_FPS)
-
-while True:
-    ret, frame = cap.read()
-    #breaks loop when video ends
-    if not ret:
-        break
-    #convert each frame to CMY
-    conversion = cmyConversion(frame)
-
-    #creates mask
-    red_mask = (conversion[1] > cyan) & (conversion[2] < magenta) & (conversion[3] > yellow)
-
-    result = np.zeros_like(conversion[0])
-    result[red_mask] = conversion[0][red_mask]
-
-    cv2.imshow('CMY Conversion', result)  #access CMY image through cmy_result[0]
-
-    #shut video if 'q' pressed
-    if cv2.waitKey(int(1000 / fps)) & 0xFF == ord('q'):
-        break
-
-cap.release()
+cv2.imshow('Masked Image', masked_img)
+cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+

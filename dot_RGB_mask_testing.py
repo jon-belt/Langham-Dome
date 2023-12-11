@@ -1,20 +1,15 @@
 from conversions import cmyConversion
 import numpy as np
 import cv2
-import time
 
 i = 0
-#values before being swapped
-# redL = [120]     
-# greenL = [210]
-# blueL = [125]
-
 redL = [125]
 greenL = [210]
 blueL = [125]
 
-reticuleDotPath = ("./imgs/reticuleAndDot.png")
-dotPath = ("./imgs/dot.png")
+reticule_path = ("./imgs/reticule.png")
+reticule_dot_path = ("./imgs/reticuleAndDot.png")
+dot_path = ("./imgs/dot.png")
 
 #this code runs through every possible value in the colour lists
 for red_value in redL:
@@ -23,17 +18,17 @@ for red_value in redL:
             #counter so i know how close it is to being finished
             print(i)
             i=i+1
-            img = cv2.imread(reticuleDotPath)
+            img = cv2.imread(reticule_dot_path)
             if img is not None:
                 #split channels for CMY conversion
                 blue_channel, green_channel, red_channel = cv2.split(img)
 
                 # create a red colour mask, capturing a range of red shades
-                red_mask = (red_channel > red_value) & (green_channel < green_value) & (blue_channel < blue_value)
+                dot_mask = (red_channel > red_value) & (green_channel < green_value) & (blue_channel < blue_value)
 
                 # create an output image with only the red regions
                 result = np.zeros_like(img)
-                result[red_mask] = img[red_mask]
+                result[dot_mask] = img[dot_mask]
 
                 cv2.imshow('Red Mask', result)
                 cv2.waitKey(0)

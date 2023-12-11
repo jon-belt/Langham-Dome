@@ -13,7 +13,4 @@ def cmyConversion(img):
 
     #merge the CMY channels into a single image
     cmy_img = cv2.merge((cyan_channel, magenta_channel, yellow_channel))
-    img_and_channels = [cmy_img, cyan_channel, magenta_channel, yellow_channel]
-
-    #any code using this function can access the image variable through x[0], and the channels through x[1,2,3] (cyan, magenta, yellow)
-    return(img_and_channels)
+    return(cmy_img)
