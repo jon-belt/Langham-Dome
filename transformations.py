@@ -1,4 +1,4 @@
-#this script holds all image transformation functions
+ #this script holds all image transformation functions
 import cv2
 import numpy as np
 
@@ -32,6 +32,20 @@ def getDotContours(img, img_contour):
     print(cnt_count, "Dot(s) found.")
     print(cnt_centre_array)
     return(cnt_centre_array)
+
+def getReticuleContours(img, img_contour):
+    contours, heirarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    cnt_count = 0
+    #working out area to remove noise/ unwanted contours
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        #only draws contours above a certain size
+        if area >= (1000):
+            cv2.drawContours(img_contour, cnt, -1, (255, 0 ,255), 7)
+            cnt_count = cnt_count + 1
+    print(cnt_count, "Contour(s) found.")
+    print("Contour centre:", getCentre(cnt))
+    #return() returns centre of reticule
             
 
 def dotMask(img):
