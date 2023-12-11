@@ -1,6 +1,8 @@
 from locate_points import locateDot
 import cv2
 import numpy as np
+from conversions import cmyConversion
+from transformations import dotMask
 
 reticule_path = ("./imgs/reticule.png")
 reticule_dot_path = ("./imgs/reticuleAndDot.png")
