@@ -1,4 +1,4 @@
-from locate_points import locateDot
+from locate_points import locateDot, locateReticule
 import cv2
 import numpy as np
 from conversions import cmyConversion
@@ -9,13 +9,9 @@ reticule_dot_path = ("./imgs/reticuleAndDot.png")
 dot_path = ("./imgs/dot.png")
 three_dot_path = ("./imgs/3dots.png")
 
-locateDot(reticule_dot_path)
+#locateDot(three_dot_path)
+print(locateReticule(reticule_dot_path))
 
-img = cv2.imread(reticule_dot_path)
-img2 = cv2.imread(reticule_dot_path)
-
-cmy_img = cmyConversion(img)
-cmy_img2= cmyConversion(img2)
 
 
 

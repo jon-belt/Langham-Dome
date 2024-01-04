@@ -29,7 +29,7 @@ def getDotContours(img, img_contour):
         cnt_count = cnt_count + 1
         cnt_centre_array.append(getCentre(cnt))
 
-    print(cnt_count, "Dot(s) found.")
+    print(cnt_count, "Dot Contours(s) found.")
     print(cnt_centre_array)
     return(cnt_centre_array)
 
@@ -43,11 +43,23 @@ def getReticuleContours(img, img_contour):
         if area >= (1000):
             cv2.drawContours(img_contour, cnt, -1, (255, 0 ,255), 7)
             cnt_count = cnt_count + 1
-    print(cnt_count, "Contour(s) found.")
-    print("Contour centre:", getCentre(cnt))
-    #return() returns centre of reticule
+            y_offset = (525-397)
+            contour_centre = getCentre(cnt)
+            reticule_x = contour_centre[0]
+            reticule_y = (contour_centre[1]+y_offset)
+            #may need to return touple of array and contour no. if algorithm detects multiple reticule contours on different test videos
+        else:
+            print("No reticule found.")
+        
+        if cnt_count == 0:
+            print(cnt_count, "Reticule Contour(s) found.")
+            return(None)
+        else:
+            print(cnt_count, "Reticule Contour(s) found.")
+            reticule_centre = [reticule_x, reticule_y]
+            #print(reticule_centre)
+            return([reticule_x, reticule_y])
             
-
 def dotMask(img):
     #'dotMask' is a function that takes in an image, applies a mask bespokely made for the aim point
     #create a red colour mask, capturing a range of red shades
@@ -63,6 +75,7 @@ def dotMask(img):
 def reticuleMask(img):
     #'reticuleMask' is a function that takes in an image, applies a mask bespokely made for the reticule
     #create a deep purple colour mask, capturing a range of red shades
+                          # B   G   R
     lower_mask = np.array([39, 16, 25], dtype = "uint8")
     upper_mask= np.array([61, 32, 62], dtype = "uint8")
 
