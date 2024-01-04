@@ -1,4 +1,5 @@
-from locate_points import locateDot, locateReticule
+#from locate_points import locateDot, locateReticule, reticuleTemplate
+from template_testing import reticuleTemplate
 import cv2
 import numpy as np
 from conversions import cmyConversion
@@ -9,10 +10,10 @@ reticule_dot_path = ("./imgs/reticuleAndDot.png")
 dot_path = ("./imgs/dot.png")
 three_dot_path = ("./imgs/3dots.png")
 
-#locateDot(three_dot_path)
-print(locateReticule(reticule_dot_path))
+reticuleTemplate(reticule_path)
 
-
+#template matching methods:
+#methods = [cv2.TM_CCOEFF, cv2.TM_CCOEFF_NORMED, cv2.TM_CCORR, cv2.TM_CCORR_NORMED, cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]
 
 
 

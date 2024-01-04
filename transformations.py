@@ -15,7 +15,6 @@ def getCentre(contour):
 
         #repeats same process for y
         y_centre = int(moments['m01'] / moments['m00'])
-
         return x_centre, y_centre
     else:
         return None
@@ -33,33 +32,20 @@ def getDotContours(img, img_contour):
     print(cnt_centre_array)
     return(cnt_centre_array)
 
-def getReticuleContours(img, img_contour):
-    contours, heirarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+def getReticuleContours(img):
+    contours = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cnt_count = 0
     #working out area to remove noise/ unwanted contours
     for cnt in contours:
         area = cv2.contourArea(cnt)
         #only draws contours above a certain size
-        if area >= (1000):
-            cv2.drawContours(img_contour, cnt, -1, (255, 0 ,255), 7)
+        #and area <= (20000)
+        print(cnt_count)
+        if area >= (1000) and area <= (50000):
             cnt_count = cnt_count + 1
-            y_offset = (525-397)
-            contour_centre = getCentre(cnt)
-            reticule_x = contour_centre[0]
-            reticule_y = (contour_centre[1]+y_offset)
+            print(getCentre(cnt))
             #may need to return touple of array and contour no. if algorithm detects multiple reticule contours on different test videos
-        else:
-            print("No reticule found.")
-        
-        if cnt_count == 0:
-            print(cnt_count, "Reticule Contour(s) found.")
-            return(None)
-        else:
-            print(cnt_count, "Reticule Contour(s) found.")
-            reticule_centre = [reticule_x, reticule_y]
-            #print(reticule_centre)
-            return([reticule_x, reticule_y])
-            
+       
 def dotMask(img):
     #'dotMask' is a function that takes in an image, applies a mask bespokely made for the aim point
     #create a red colour mask, capturing a range of red shades
