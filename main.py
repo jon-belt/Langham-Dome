@@ -1,5 +1,4 @@
-#from locate_points import locateDot, locateReticule, reticuleTemplate
-from template_testing import reticuleTemplate
+from locate_points import locateDot, locateReticule, reticuleTemplate
 import cv2
 import numpy as np
 from conversions import cmyConversion
