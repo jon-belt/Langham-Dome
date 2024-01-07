@@ -3,13 +3,13 @@ import numpy as np
 import cv2
 
 i = 1
-blueH = [55, 61, 65]
-greenH = [32, 35]
-redH = [55, 62, 65]
+blueH = [88]
+greenH = [72]
+redH = [80]
 
-blueL = [35, 39, 45]
-greenL = [10, 16, 20]
-redL = [20, 25, 30]
+blueL = [42]
+greenL = [10]
+redL = [36]
 
 reticule_path = ("./imgs/reticule.png")
 reticule_dot_path = ("./imgs/reticuleAndDot.png")
@@ -39,14 +39,14 @@ for blue_lower in blueL:
 
                         result = cv2.bitwise_and(cmy_img, cmy_img, mask = mask)
 
-                        # #shows image
-                        # cv2.imshow('Masked Image', result)
-                        # cv2.waitKey(0)
-                        # cv2.destroyAllWindows()
+                        #shows image
+                        cv2.imshow('Masked Image', result)
+                        cv2.waitKey(0)
+                        cv2.destroyAllWindows()
 
-                        #saves image
-                        img_name = str("LB"+str(blue_lower)+"_"+"G"+str(green_lower)+"_"+"R"+str(red_lower)+"_HB"+str(blue_higher)+"_"+"G"+str(green_higher)+"_"+"R"+str(red_higher)+".jpg")
-                        img_path = ("testing_images1/"+img_name)
-                        cv2.imwrite(img_path, result)
+                        # #saves image
+                        # img_name = str("LB"+str(blue_lower)+"_"+"G"+str(green_lower)+"_"+"R"+str(red_lower)+"_HB"+str(blue_higher)+"_"+"G"+str(green_higher)+"_"+"R"+str(red_higher)+".jpg")
+                        # img_path = ("testing_images1/"+img_name)
+                        # cv2.imwrite(img_path, result)
 
 

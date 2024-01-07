@@ -1,10 +1,11 @@
 import cv2
 import numpy as np
 from conversions import cmyConversion
-from transformations import dotMask, reticuleMask, getDotContours, getReticuleContours
+from transformations import dotMask, reticuleMask, getDotContours, getReticuleContours, crop
 
 def locateDot(imagePath):
     img = cv2.imread(imagePath)
+    img = crop(img)
     if img is not None:
         img = cv2.imread(imagePath)
         img_contour = img.copy()
@@ -26,27 +27,27 @@ def locateDot(imagePath):
     else:
         print("Error: Unable to load the image.")
 
-def locateReticule(imagePath):
-    img = cv2.imread(imagePath)
-    if img is not None:
-        #reads a frame in, performs CMY conversion and applies the mask for the dots
-        img_cmy = cmyConversion(img)
-        img_reticule = reticuleMask(img_cmy)
-        img_reticule_blur = cv2.GaussianBlur(img_reticule, (9, 9), 1)
-        img_dots_grey = cv2.cvtColor(img_reticule_blur, cv2.COLOR_BGR2GRAY)
+# def locateReticule(imagePath):
+#     img = cv2.imread(imagePath)
+#     if img is not None:
+#         #reads a frame in, performs CMY conversion and applies the mask for the dots
+#         img_cmy = cmyConversion(img)
+#         img_reticule = reticuleMask(img_cmy)
+#         img_reticule_blur = cv2.GaussianBlur(img_reticule, (9, 9), 1)
+#         img_dots_grey = cv2.cvtColor(img_reticule_blur, cv2.COLOR_BGR2GRAY)
 
-        img_canny = cv2.Canny(img_reticule, 225, 145)
+#         img_canny = cv2.Canny(img_reticule, 225, 145)
 
-        #help reduce noise
-        kernel = np.ones((5,5))
-        img_dilate = cv2.dilate(img_canny, kernel, iterations=1)
+#         #help reduce noise
+#         kernel = np.ones((5,5))
+#         img_dilate = cv2.dilate(img_canny, kernel, iterations=1)
 
-        #runs get contours function and populates 'img_contour'
-        getReticuleContours(img_dilate)
-    else:
-        print("Error: Unable to load the image.")
+#         #runs get contours function and populates 'img_contour'
+#         getReticuleContours(img_dilate)
+#     else:
+#         print("Error: Unable to load the image.")
 
-def reticuleTemplate(imagePath):
+# def reticuleTemplate(imagePath):
     #loads in and converts img to cmy, then greyscale
     img = cv2.imread(imagePath)
     img = cmyConversion(img)
@@ -81,3 +82,27 @@ def reticuleTemplate(imagePath):
 
     centreY = centreY+yOffset
     print(centreX, centreY)
+
+def getReticule(imagePath):
+    img = cv2.imread(imagePath)
+    cropped = crop(img)
+
+    #convert to grayscale
+    gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
+
+    #apply Gaussian blur
+    gray_blurred = cv2.GaussianBlur(gray, (1, 1), 0)
+
+    #apply hough circle transform
+    circles = cv2.HoughCircles(gray_blurred, cv2.HOUGH_GRADIENT, 1, 440, param1=10, param2=5, minRadius=int(410/2), maxRadius=int(440/2))
+
+    #find list of circles, get first one
+    if circles is not None:
+        circles = np.uint16(np.around(circles))
+        #get the first circle in the list of circles
+
+        first_circle = circles[0, 0]
+        center = (first_circle[0], first_circle[1])
+        print("Reticule Found at:")
+        print(center)
+        return center
