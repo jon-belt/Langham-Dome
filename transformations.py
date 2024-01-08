@@ -68,6 +68,7 @@ def getDotContours(img, img_contour):
         cnt_centre_array.append(getCentre(cnt))
 
     print(cnt_count, "Dot Contours(s) found at:", cnt_centre_array)
+    print(cnt_centre_array)
     return(cnt_centre_array)
        
 def dotMask(img):
