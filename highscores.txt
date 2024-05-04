@@ -1,0 +1,4 @@
+harry,100,Easy
+Jon,100,Easy
+martha,100,Expert
+jeff,100,Medium

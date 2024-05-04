@@ -1,7 +1,20 @@
  #this script holds all image transformation functions
 import cv2
 import numpy as np
-from conversions import cmyConversion
+
+#a function to convert a BGR image to CMY colourspace
+def cmyConversion(img):
+    #split channels for CMY conversion
+    blue_channel, green_channel, red_channel = cv2.split(img)
+
+    #calculate the CMY channels
+    cyan_channel = 1 - red_channel
+    magenta_channel = 1 - green_channel
+    yellow_channel = 1 - blue_channel
+
+    #merge the CMY channels into a single image
+    cmy_img = cv2.merge((cyan_channel, magenta_channel, yellow_channel))
+    return(cmy_img)
 
 #a function that crops the frame so that only the projection is visible
 def crop(img):
@@ -67,8 +80,11 @@ def getDotContours(img, img_contour):
         cnt_count = cnt_count + 1
         cnt_centre_array.append(getCentre(cnt))
 
-    print(cnt_count, "Dot Contours(s) found at:", cnt_centre_array)
-    print(cnt_centre_array)
+    #print(cnt_count, "Dot Contours(s) found at:", cnt_centre_array)
+
+    #if no dots found, return -1 to indicate as such
+    if cnt_count == 0:
+        return(-1)
     return(cnt_centre_array)
        
 def dotMask(img):

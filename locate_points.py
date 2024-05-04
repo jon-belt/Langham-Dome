@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-from conversions import cmyConversion
-from transformations import dotMask, getDotContours, crop
+from transformations import dotMask, getDotContours, crop, cmyConversion
 
 def locateDot(imagePath):
     img = cv2.imread(imagePath)
@@ -24,6 +23,7 @@ def locateDot(imagePath):
         return getDotContours(img_dilate, img_contour)
     else:
         print("Error: Unable to load the image.")
+        return(-1)
 
 def locateReticule(imagePath):
     img = cv2.imread(imagePath)
@@ -40,5 +40,5 @@ def locateReticule(imagePath):
         circles = np.uint16(np.around(circles))
         first_circle = circles[0, 0]                    #get first circle
         center = (first_circle[0], first_circle[1])     #get centre of circle
-        print("Reticule Found at:", center)
+        #print("Reticule Found at:", center)
         return center
