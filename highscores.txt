@@ -1,4 +1,2 @@
-harry,100,Easy
-Jon,100,Easy
-martha,100,Expert
-jeff,100,Medium
+Jon,91.6587589829136,Easy
+test,0,Easy
