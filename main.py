@@ -2,7 +2,7 @@ from calculations import calcScore
 from highscores import HighScores
 #import numpy as np
 import tkinter as tk
-from tkinter import messagebox, Toplevel, Label, Entry, Radiobutton, IntVar, Button
+from tkinter import Toplevel, Label, Entry, Radiobutton, IntVar, Button
 
 reticule_path = ("./imgs/reticule.png")
 reticule_dot_path = ("./imgs/reticuleAndDot.png")
@@ -11,8 +11,7 @@ three_dot_path = ("./imgs/3dots.png")
 bad_score = ("./imgs/bad_score.png")
 good_score = ("./imgs/good_score.png")
 
-import tkinter as tk
-from tkinter import Toplevel, Label, Entry, Radiobutton, IntVar, Button
+
 
 class GameApp:
     def __init__(self, root):
