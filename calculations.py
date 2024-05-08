@@ -26,7 +26,6 @@ def calcDist(dot_coords, ret_coords):
 
     return shortest_dist
 
-
 def calcScore(imgPath, difficulty):
     x = locateDot(imgPath)
     y = locateReticule(imgPath)

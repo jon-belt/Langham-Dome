@@ -1,17 +1,24 @@
 from calculations import calcScore
 from highscores import HighScores
-#import numpy as np
 import tkinter as tk
 from tkinter import Toplevel, Label, Entry, Radiobutton, IntVar, Button
+from picamera2 import Picamera2, Preview 
 
-reticule_path = ("./imgs/reticule.png")
-reticule_dot_path = ("./imgs/reticuleAndDot.png")
-dot_path = ("./imgs/dot.png")
-three_dot_path = ("./imgs/3dots.png")
-bad_score = ("./imgs/bad_score.png")
-good_score = ("./imgs/good_score.png")
+i = 0
 
+def takePic(i):
+    picam2 = Picamera2() 
+    camera_config = picam2.create_preview_configuration() 
+    picam2.configure(camera_config) 
+    picam2.start_preview(Preview.QTGL) 
+    picam2.start()
 
+    path = ("captures/"+i+".jpg") 
+
+    picam2.capture_file(path) 
+    picam2.close()
+
+    return(path)
 
 class GameApp:
     def __init__(self, root):
@@ -88,7 +95,8 @@ class GameApp:
         self.show_final_score(simulation_window, name)
 
     def handle_shot(self, difficulty, total_score_label):
-        imgPath = good_score
+        i = i+1
+        imgPath = takePic(i)
 
         difficulties = ["Easy", "Medium", "Hard", "Expert"]
         difficulty_index = difficulties.index(difficulty)  #convert string to an index
@@ -122,7 +130,6 @@ class GameApp:
             filtered_scores = [score for score in scores_list if score[2] == difficulty]
             for i, (name, score, diff) in enumerate(filtered_scores, start=1):
                 Label(scores_window, text=f"{i}. {name}: {score}", bg='#f0f0f0').pack()
-    
 
 if __name__ == "__main__":
     root = tk.Tk()
