@@ -6,6 +6,8 @@ from picamera2 import Picamera2, Preview
 
 i = 0
 
+print("captures/"+str(i)+".jpg") 
+
 def takePic(i):
     picam2 = Picamera2() 
     camera_config = picam2.create_preview_configuration() 
