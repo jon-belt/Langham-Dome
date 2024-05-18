@@ -2,25 +2,23 @@ from calculations import calcScore
 from highscores import HighScores
 import tkinter as tk
 from tkinter import Toplevel, Label, Entry, Radiobutton, IntVar, Button
-from picamera2 import Picamera2, Preview 
 
-i = 0
+### Linux only PI module, does not work on my main desktop so this stays commented out whilst working from it
+# from picamera2 import Picamera2, Preview 
 
-print("captures/"+str(i)+".jpg") 
+# def takePic(i):
+#     picam2 = Picamera2() 
+#     camera_config = picam2.create_preview_configuration() 
+#     picam2.configure(camera_config) 
+#     picam2.start_preview(Preview.QTGL) 
+#     picam2.start()
 
-def takePic(i):
-    picam2 = Picamera2() 
-    camera_config = picam2.create_preview_configuration() 
-    picam2.configure(camera_config) 
-    picam2.start_preview(Preview.QTGL) 
-    picam2.start()
+#     path = ("captures/"+i+".jpg") 
 
-    path = ("captures/"+i+".jpg") 
+#     picam2.capture_file(path) 
+#     picam2.close()
 
-    picam2.capture_file(path) 
-    picam2.close()
-
-    return(path)
+#     return(path)
 
 class GameApp:
     def __init__(self, root):
@@ -29,6 +27,7 @@ class GameApp:
         self.root.geometry("400x300")
         self.high_scores = HighScores()
         self.total_score = 0
+        self.i = 0
 
         self.menu_frame = tk.Frame(self.root, bg='#f0f0f0')
         self.menu_frame.pack(expand=True, fill='both')
@@ -97,8 +96,8 @@ class GameApp:
         self.show_final_score(simulation_window, name)
 
     def handle_shot(self, difficulty, total_score_label):
-        i = i+1
-        imgPath = takePic(i)
+        self.i = self.i+1
+        #imgPath = takePic(self.i)
 
         difficulties = ["Easy", "Medium", "Hard", "Expert"]
         difficulty_index = difficulties.index(difficulty)  #convert string to an index
@@ -133,7 +132,11 @@ class GameApp:
             for i, (name, score, diff) in enumerate(filtered_scores, start=1):
                 Label(scores_window, text=f"{i}. {name}: {score}", bg='#f0f0f0').pack()
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GameApp(root)
-    root.mainloop()
+# if __name__ == "__main__":
+#     root = tk.Tk()
+#     app = GameApp(root)
+#     root.mainloop()
+
+imgPath = ("")
+score = calcScore(imgPath, 1)
+
