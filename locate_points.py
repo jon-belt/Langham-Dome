@@ -3,6 +3,7 @@ import numpy as np
 from transformations import dotMask, getDotContours, crop, cmyConversion
 
 def locateDot(imagePath):
+    print("locateDot Called")
     img = cv2.imread(imagePath)
     if img is not None:
         img = cv2.imread(imagePath)     #reads in img
@@ -26,6 +27,7 @@ def locateDot(imagePath):
         return(-1)
 
 def locateReticule(imagePath):
+    print("locateReticule Called")
     img = cv2.imread(imagePath)
     cropped = crop(img)         #crops img to size of projection
     gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)    #convert to grayscale

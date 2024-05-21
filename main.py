@@ -137,6 +137,7 @@ class GameApp:
 #     app = GameApp(root)
 #     root.mainloop()
 
-imgPath = ("")
-score = calcScore(imgPath, 1)
+imgPath = ("imgs/good_score.png")
+# score = calcScore(imgPath, 0)
 
+# print(score)

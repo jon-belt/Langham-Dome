@@ -1,9 +1,11 @@
- #this script holds all image transformation functions
 import cv2
 import numpy as np
 
+#this script holds all image transformation functions
+
 #a function to convert a BGR image to CMY colourspace
 def cmyConversion(img):
+    print("cmyConversion Called")
     #split channels for CMY conversion
     blue_channel, green_channel, red_channel = cv2.split(img)
 
@@ -18,10 +20,10 @@ def cmyConversion(img):
 
 #a function that crops the frame so that only the projection is visible
 def crop(img):
+    print("crop Called")
     try:
         cmy_img = cmyConversion(img)    #cmy conversion
         
-
         #colour mask to separate projection from wall
         lower_mask = np.array([30, 10, 40], dtype = "uint8")
         upper_mask= np.array([105, 100, 100], dtype = "uint8")
@@ -60,6 +62,7 @@ def crop(img):
 
 #a function to get the centre of a single contour, used by only the getContours function
 def getCentre(contour):
+    print("getCentre Called")
     #calculate moments
     moments = cv2.moments(contour)
 
@@ -76,6 +79,7 @@ def getCentre(contour):
         return None
 
 def getDotContours(img, img_contour):
+    print("getDotContours Called")
     contours, heirarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cnt_count = 0
     cnt_centre_array = []
@@ -92,6 +96,7 @@ def getDotContours(img, img_contour):
     return(cnt_centre_array)
        
 def dotMask(img):
+    print("dotMask Called")
     #'dotMask' is a function that takes in an image, applies a mask bespokely made for the aim point
     #create a red colour mask, capturing a range of red shades
     lower_mask = np.array([40, 50, 100], dtype = "uint8")

@@ -4,6 +4,7 @@ from locate_points import locateDot, locateReticule
 #dot_coords is an array of arrays with length varying from 1-3 dots, ret_coords is just an array
 #ret_coords is always [x, y], dot_coords is always at least [[x1, y1], [x2, y2], [x3, y3]]
 def calcDist(dot_coords, ret_coords):
+    print("calcDist Called")
     #check if dot_coords is -1, then return -1
     if dot_coords == -1:
         return -1
@@ -27,6 +28,7 @@ def calcDist(dot_coords, ret_coords):
     return shortest_dist
 
 def calcScore(imgPath, difficulty):
+    print("calcScore Called")
     x = locateDot(imgPath)
     y = locateReticule(imgPath)
 
