@@ -18,7 +18,7 @@ def create_histogram(image, color_space, save_path):
         plt.fill_between(range(256), hist.flatten(), color=colors[i], alpha=0.5, label=channel_labels[i])
 
     plt.xlim([0, 256])
-    plt.title(f"{color_space} Color Histogram")
+    plt.title(f"{color_space} Color Histogram for the Right Aim Point")
     plt.xlabel('Pixel Intensity')
     plt.ylabel('Frequency')
     plt.legend(loc='upper right')
