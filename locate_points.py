@@ -26,21 +26,63 @@ def locateDot(imagePath):
         print("Error: Unable to load the image.")
         return(-1)
 
+# def locateReticule(imagePath):
+#     print("locateReticule Called")
+#     img = cv2.imread(imagePath)
+#     cropped = crop(img)         #crops img to size of projection
+
+#     cv2.imshow("cropped", cropped)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()
+
+#     gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)    #convert to grayscale
+
+#     gray_blurred = cv2.GaussianBlur(gray, (1, 1), 0)    #apply blur to reduce noise
+
+#     #apply hough circle transform
+    
+#     ### change this depending on the resolution !!!
+#     circles = cv2.HoughCircles(gray_blurred, cv2.HOUGH_GRADIENT, 1, 440, param1=10, param2=5, minRadius=int(410/2), maxRadius=int(440/2))
+
+#     #find list of circles, get first one
+#     if circles is not None:
+#         circles = np.uint16(np.around(circles))
+#         first_circle = circles[0, 0]                    #get first circle
+#         center = (first_circle[0], first_circle[1])     #get centre of circle
+#         print("Reticule Found at:", center)
+#         return center
+
 def locateReticule(imagePath):
     print("locateReticule Called")
     img = cv2.imread(imagePath)
-    cropped = crop(img)         #crops img to size of projection
-    gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)    #convert to grayscale
+    cropped = crop(img)  # crops img to size of projection
 
-    gray_blurred = cv2.GaussianBlur(gray, (1, 1), 0)    #apply blur to reduce noise
+    cmy = cmyConversion(cropped)
 
-    #apply hough circle transform
-    circles = cv2.HoughCircles(gray_blurred, cv2.HOUGH_GRADIENT, 1, 440, param1=10, param2=5, minRadius=int(410/2), maxRadius=int(440/2))
+    gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)  # convert to grayscale
+    gray_blurred = cv2.GaussianBlur(gray, (1, 1), 0)  # apply blur to reduce noise
 
-    #find list of circles, get first one
+    # apply hough circle transform
+    # change this depending on the resolution
+    circles = cv2.HoughCircles(
+        gray_blurred, cv2.HOUGH_GRADIENT, 1, 440, param1=10, param2=5, minRadius=int(410 / 2), maxRadius=int(440 / 2)
+    )
+
+    # find list of circles, get first one
     if circles is not None:
         circles = np.uint16(np.around(circles))
-        first_circle = circles[0, 0]                    #get first circle
-        center = (first_circle[0], first_circle[1])     #get centre of circle
-        #print("Reticule Found at:", center)
+        first_circle = circles[0, 0]  # get first circle
+        center = (first_circle[0], first_circle[1])  # get centre of circle
+        radius = first_circle[2]  # get radius of circle
+        print("Reticule Found at:", center)
+
+        # draw the circle and its center
+        cv2.circle(cmy, center, radius, (0, 255, 0), 2)  # draw the circle
+        cv2.circle(cmy, center, 1, (0, 0, 255), 3)  # draw the center of the circle
+
+        # display the image with the circle
+        cv2.imshow("Detected Reticule", cmy)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
         return center

@@ -5,7 +5,7 @@ import numpy as np
 
 #a function to convert a BGR image to CMY colourspace
 def cmyConversion(img):
-    print("cmyConversion Called")
+    #print("cmyConversion Called")
     #split channels for CMY conversion
     blue_channel, green_channel, red_channel = cv2.split(img)
 
@@ -33,7 +33,7 @@ def crop(img):
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         if contours:
-            #uses largest contour
+            #uses largest contour, only works if a large contour is found
             contour = max(contours, key=cv2.contourArea)
             cv2.drawContours(img, [contour], -1, (0, 255, 0), 2)
 
@@ -69,11 +69,10 @@ def getCentre(contour):
     #if the there are contours present
     if moments['m00'] != 0:
         #calculate x of the center point using:
-        #centroid_x = Mx / M, where Mx is the sum of x and M is area
-        x_centre = int(moments['m10'] / moments['m00'])
+        x_centre = int(moments['m10'] / moments['m00'])     #sum of x coords / area
 
         #repeats same process for y
-        y_centre = int(moments['m01'] / moments['m00'])
+        y_centre = int(moments['m01'] / moments['m00'])     #sum of y coords divided by area
         return x_centre, y_centre
     else:
         return None
