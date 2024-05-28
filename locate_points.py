@@ -26,41 +26,6 @@ def locateDot(imagePath):
         print("Error: Unable to load the image.")
         return(-1)
 
-# def locateReticule(imagePath):
-#     #print("locateReticule Called")
-#     img = cv2.imread(imagePath)
-#     cropped = crop(img)  # crops img to size of projection
-
-#     cmy = cmyConversion(cropped)
-
-#     gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)  # convert to grayscale
-#     gray_blurred = cv2.GaussianBlur(gray, (1, 1), 0)  # apply blur to reduce noise
-
-#     # apply hough circle transform
-#     # change this depending on the resolution
-#     circles = cv2.HoughCircles(
-#         gray_blurred, cv2.HOUGH_GRADIENT, 1, 440, param1=10, param2=5, minRadius=int(410 / 2), maxRadius=int(440 / 2)
-#     )
-
-#     # find list of circles, get first one
-#     if circles is not None:
-#         circles = np.uint16(np.around(circles))
-#         first_circle = circles[0, 0]  # get first circle
-#         centre = (first_circle[0], first_circle[1])  # get centre of circle
-#         radius = first_circle[2]  # get radius of circle
-#         print("Reticule Found at:", centre)
-
-#         # draw the circle and its centre
-#         cv2.circle(cmy, centre, radius, (0, 255, 0), 2)  # draw the circle
-#         cv2.circle(cmy, centre, 1, (0, 0, 255), 3)  # draw the centre of the circle
-
-#         # display the image with the circle
-#         cv2.imshow("Detected Reticule", cmy)
-#         cv2.waitKey(0)
-#         cv2.destroyAllWindows()
-
-#         return centre
-
 def locateReticule(imagePath, param1_list, param2_list):
     print("locateReticule Called")
     img = cv2.imread(imagePath)
