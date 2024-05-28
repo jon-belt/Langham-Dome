@@ -16,3 +16,6 @@ interesting images
 templates
 example images
 __pycache__
+colour_spaces
+images
+transformations.py

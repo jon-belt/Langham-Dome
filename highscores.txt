@@ -1,3 +1,5 @@
 Jeff,366.6350359316544,Easy
 Jon,91.6587589829136,Easy
 test,0,Easy
+,0,Easy
+,0,Easy
