@@ -2,6 +2,11 @@ from calculations import calcScore
 from highscores import HighScores
 import tkinter as tk
 from tkinter import Toplevel, Label, Entry, Radiobutton, IntVar, Button
+from transformations import crop
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import os
 
 ## Linux only PI module, does not work on my main desktop so this stays commented out whilst working from it
 # from picamera2 import Picamera2, Preview 
@@ -143,9 +148,27 @@ from tkinter import Toplevel, Label, Entry, Radiobutton, IntVar, Button
 #     app = GameApp(root)
 #     root.mainloop()
 
-testImg1 = "imgs/3dots.png"
-testImg2 = "imgs/3dots2.png"
-testImg3 = "imgs/bad_score.png"
-testImg4 = "imgs/good_score.png"
-testImg5 = "imgs/reticule.png"
-testImg6 = "imgs/reticuleAndDot.png"
+def display_edges(images, param1, param2):
+    plt.figure(figsize=(15, 10))
+    rows = 2
+    cols = 3
+    for i, image in enumerate(images):
+        hls = cv2.cvtColor(image, cv2.COLOR_BGR2HLS)
+        gray = cv2.cvtColor(hls, cv2.COLOR_BGR2GRAY)
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+        edges = cv2.Canny(blurred, param1, param2)
+
+        dilated_edges = cv2.dilate(edges, None, iterations=10)
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+        
+        plt.subplot(rows, cols, i + 1)
+        plt.imshow(dilated_edges, cmap='gray')
+        plt.title(f'Edges in Image {i+1}')
+        plt.axis('off')
+    
+    plt.tight_layout()
+    filename = f"testing_images1/{param1}_{param2}.png"
+    print(param1,"-",param2)
+    plt.savefig(filename)
+    plt.close()
+
