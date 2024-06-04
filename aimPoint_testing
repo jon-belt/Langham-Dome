@@ -1,0 +1,101 @@
+import cv2
+import os
+from locate_points import locateDot
+import math
+import numpy as np
+
+### Code to capture frames for positive and negative testing
+# output_dir = 'aimPointAbsent'
+# if not os.path.exists(output_dir):
+#     os.makedirs(output_dir)
+
+# video_path = 'videos/testing/absent.mp4'
+# cap = cv2.VideoCapture(video_path)
+
+# if not cap.isOpened():
+#     exit()
+
+# frame_count = 0
+# total_frames_to_capture = 50
+
+# while frame_count < total_frames_to_capture:
+#     ret, frame = cap.read()
+#     if not ret:
+#         break
+
+#     frame_filename = os.path.join(output_dir, f'frame_{frame_count:03d}.png')
+#     cv2.imwrite(frame_filename, frame)
+
+#     frame_count += 1
+
+#     print(f"Captured frame {frame_count}/{total_frames_to_capture}")
+
+# cap.release()
+# cv2.destroyAllWindows()
+
+# print("Frame capture completed.")
+
+
+### code to find the confusion matrix 
+# input_dir = 'aimPointAbsent'
+# total = 0
+# absent = 0
+
+# for filename in os.listdir(input_dir):
+#     image_path = os.path.join(input_dir, filename)
+#     result = locateDot(image_path)
+#     total += 1
+
+#     if result == -1:
+#         absent += 1
+
+# print(f"Total images processed: {total}")
+# print(f"Images without detected dots: {absent}")
+# print(f"Accuracy: {absent / total * 100:.2f}%")
+
+# Function to calculate Euclidean distance
+def calculate_distance(point1, point2):
+    return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)
+
+# Directory containing the images
+input_dir = 'aimPointPresent'
+all_filenames = [f for f in os.listdir(input_dir) if f.endswith(('.png', '.jpg', '.jpeg'))]
+
+# Select the first 5 filenames
+selected_filenames = all_filenames[:5]
+
+# Provided true aim points for the first 5 images
+true_aim_points = [
+    [(888, 538), (928, 580), (1028, 549)], [(887, 537), (927, 578), (1029, 550)],
+    [(887, 537), (926, 583), (1029, 550)], [(887, 538), (928, 584), (1030, 550)],
+    [(887, 536), (929, 584), (1029, 551)]
+]
+
+# Store the detected points and calculate distances
+distances = []
+
+for i, filename in enumerate(selected_filenames):
+    image_path = os.path.join(input_dir, filename)
+    detected_points = locateDot(image_path)
+    
+    if detected_points != -1:
+        true_points = true_aim_points[i]
+        avg_distance = np.mean([min([calculate_distance(detected_point, true_point) for true_point in true_points]) for detected_point in detected_points])
+        distances.append(avg_distance)
+
+# Normalize distances (assuming max allowable distance is the diagonal of the image)
+image_width = 1920  # Replace with actual image width
+image_height = 1080  # Replace with actual image height
+max_distance = math.sqrt(image_width ** 2 + image_height ** 2)
+
+normalized_distances = [1 - (d / max_distance) for d in distances]
+average_distance_accuracy = sum(normalized_distances) / len(normalized_distances)
+
+# Given Detection Accuracy
+detection_accuracy = 0.91
+
+# Overall Accuracy Calculation (equal importance)
+overall_accuracy = 0.5 * detection_accuracy + 0.5 * average_distance_accuracy
+
+print(f"Normalized Average Distance Accuracy: {average_distance_accuracy * 100:.2f}%")
+print(f"Overall Accuracy: {overall_accuracy * 100:.2f}%")

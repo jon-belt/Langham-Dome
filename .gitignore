@@ -20,3 +20,9 @@ colour_spaces
 images
 transformations.py
 videos
+output.mp4
+imgs
+aimPointPresent
+aimPointAbsent
+histograms
+colour_spaces
