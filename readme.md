@@ -1,5 +1,7 @@
 This is my final year dissertation project's source code.
 
 A defunct World War 2 anti-aircraft (AA) gallery, transformed into an interactive educational exhibit slash museum.  The Dome consists of numerous World War 2 and aircraft facts, replicas and artefacts as well as a main attraction the AA gun simulation. During World War 2 the Langham Dome was used to train AA Gunners, by using a disarmed AA gun where the trainee Gunners would fire the training gun at projected aircraft flying in random directions.  The optimum aimpoint was masked onto the projection with a yellow circle, and the training AA gun had a filter on its scope, the same shade of yellow As the optimum aimpoint.  Upon trigger press, a projection reticle was fired from the mock AA gun on the screen.  The reticle and its relative position to the optimum aimpoint gave examiners and trainers a good idea of the trainee Gunners natural skill.
+
 In the modern museum this same training exercise is kept as an interactive feature, and a national heritage site.  My goal within this project was to use computer vision and robotics techniques two automate the examination process and provide an appropriate score for the user afterwards.
+
 Although not included within the source code, the documentation proves that my final implementation of the computer vision algorithms provides an 80% accuracy.  A majority of the files within this repository are experiments and trials done to test the accuracy of algorithmic techniques.
